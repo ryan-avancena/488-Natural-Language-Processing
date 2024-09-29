@@ -10,16 +10,17 @@ from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.preprocessing import StandardScaler
 
 
-
-
 df = pd.read_csv('./datasets/marketing_data.csv',sep=';')
 
 """ DATA OBSERVATION """
 
-# print(f'numeric: {df.select_dtypes(include="number").columns}')
-# print(f'categorical: {df.select_dtypes(include="object").columns}')
+print(f'numeric: {df.select_dtypes(include="number").columns}')
+print(f'categorical: {df.select_dtypes(include="object").columns}')
 
 """ PREPROCESSING """
+
+# df = df.drop(columns=['month','day','loan','marital'])
+
 label_encoder = LabelEncoder()
 categoricals = df.select_dtypes(include="object").columns
 encoded = df.copy()
@@ -41,6 +42,8 @@ X_train_scaled, X_test_scaled, y_train, y_test = train_test_split(x_scaled,y,tes
 logReg = LogisticRegression()
 logReg.fit(X_train_scaled, y_train)
 
+# print(f'LogReg Coeffiecients: {logReg.coef_}')
+# print(f'LogReg Bias: {logReg.intercept_}')
 print(f'Logistic Regression Score: {logReg.score(X_test_scaled,y_test)}')
 
 
